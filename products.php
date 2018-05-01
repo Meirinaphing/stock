@@ -3,6 +3,9 @@
 - tombol search (supplier dan category)
 -->
 
+  <!-- Select2 -->
+  <link rel="stylesheet" href="lte/select2/dist/css/select2.min.css">
+
 <div class="row">
 	<div class="col-md-12">
 
@@ -81,11 +84,24 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Category ID </label>
 						<label class="col-sm-1 control-label">: </label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="cid" placeholder="Category ID" name="cid" autocomplete="off">
-						</div>
+						<div class="col-sm-8">
+<!--							<input type="text" class="form-control" id="cid" placeholder="Category ID" name="cid" autocomplete="off">-->
+							
+								<select class="form-control select2" multiple="" data-placeholder="" style="width: 100%;">
+									
+							<?php
+							$sql = "select * from categories";
+							$query = $connect->query($sql);
+
+							while($row = $query->fetch_array()) {
+								echo "<option value='".$row[1]."'>".$row[2]."</option>";
+							}
+							?>
+								</select>
+							</div>
+						
 						<div class="col-sm-1" style="margin-left:-20px;">
-							<button type="button" id="searchCid" name="searchCid" onclick="searchCategory();" data-toggle="modal" data-target="#searchC" data-backdrop="static" data-keyboard="false" class="btn btn-default glyphicon glyphicon-search"></button>
+<!--							<button type="button" id="searchCid" name="searchCid" onclick="searchCategory();" data-toggle="modal" data-target="#searchC" data-backdrop="static" data-keyboard="false" class="btn btn-default glyphicon glyphicon-search"></button>-->
 						</div>	
 					</div> <!-- /form-group-->
 					<div class="form-group">
@@ -212,58 +228,20 @@
 
 
 <!-- Search Category -->
-<div class="modal fade" id="searchC" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title"><i class="fa fa-search"></i> Search Category </h4>
-			</div>
-			<div class="modal-body">
-
-				<div id="searchC-messages"></div>
-
-				<div class="modal-loading div-hide" style="width:50px; margin:auto;padding-top:50px; padding-bottom:50px;">
-					<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-					<span class="sr-only">Loading...</span>
-				</div>
-
-				<div class="searchC-result">
-					<table class="table" id="sc">
-						<thead>
-							<tr>
-								<th>Category ID<div class="glyphicon glyphicon-sort"></div></th>
-								<th>Category Name <div class="glyphicon glyphicon-sort"></div></th>
-								<th>Description <div class="glyphicon glyphicon-sort"></div></th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-							$sql = "select * from categories";
-							$query = $connect->query($sql);
-
-							while($row = $query->fetch_array()) {
-								echo "<tr>";
-								echo "<td>".$row[0]."</td>";
-								echo "<td>".$row[1]."</td>";
-								echo "<td>".$row[2]."</td>";
-								echo "<td><button class='btn btn-default'>Select</button></td>";
-								echo "</tr>";
-							}
-							?>
-						</tbody>
-					</table>
-				</div>         	        
-				<!-- /edit brand result -->
-
-			</div> <!-- /modal-body -->
-		</div>
-		<!-- /modal-content -->
-	</div>
-	<!-- /modal-dailog -->
-</div>
 <!-- / add modal -->
 <!-- /edit brand -->
 
+<!-- Select2 -->
+<script src="lte/select2/dist/js/select2.full.min.js"></script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+  })
+</script>
+
 <script src="custom/js/products.js"></script>
+
 
 <?php require_once 'includes/footer.php'; ?>
